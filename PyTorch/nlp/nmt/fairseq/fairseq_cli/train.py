@@ -13,6 +13,7 @@ import math
 import os
 import sys
 from typing import Dict, Optional, Any, List, Tuple, Callable
+import gc
 
 # We need to setup root logger before importing any fairseq libraries.
 logging.basicConfig(
@@ -247,6 +248,7 @@ def train(
         if epoch_itr.epoch <= len(cfg.optimization.update_freq)
         else cfg.optimization.update_freq[-1]
     )
+    gc.disable()
     itr = iterators.GroupedIterator(itr, update_freq)
     if cfg.common.tpu:
         itr = utils.tpu_data_loader(itr)
@@ -316,6 +318,7 @@ def train(
 
     # reset epoch-level meters
     metrics.reset_meters("train")
+    gc.collect()
     return valid_losses, should_stop
 
 
