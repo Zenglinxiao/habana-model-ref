@@ -41,7 +41,9 @@ class BucketPadLengthDataset(BaseWrapperDataset):
         self.left_pad = left_pad
 
         assert num_buckets > 0
-        if num_buckets == 10:
+        if num_buckets == 15:
+            self.buckets = (4, 8, 11, 14, 18, 21, 24, 28, 32, 37, 43, 51, 77, 104, 217)
+        elif num_buckets == 10:
             self.buckets = (13, 20, 23, 30, 35, 41, 51, 64, 96, 256)
         elif num_buckets == 3:
             self.buckets = (16, 32, 256)
